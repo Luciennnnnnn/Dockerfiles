@@ -1,0 +1,6 @@
+FROM bit:5000/luoxin_py3.8_pytorch1.10.1_cu11.1_devel_lightning1.5.7_hydrav2
+
+RUN which pip && pip install --upgrade pip --no-cache-dir && \
+                 pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu111/torch1.10.0/index.html --no-cache-dir && \
+                 pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ opencv-python-headless==4.5.5.62 --no-cache-dir && \
+                 conda clean --all -y

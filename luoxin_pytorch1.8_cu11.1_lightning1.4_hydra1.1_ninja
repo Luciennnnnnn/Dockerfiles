@@ -1,0 +1,3 @@
+FROM bit:5000/luoxin_pytorch1.8_cu11.1_lightning1.4_hydra1.1_lpips
+
+RUN which pip && pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ ninja torchinfo --no-cache-dir

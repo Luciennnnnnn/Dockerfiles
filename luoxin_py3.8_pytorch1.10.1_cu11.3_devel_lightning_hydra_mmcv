@@ -1,0 +1,9 @@
+FROM pytorch/pytorch:1.10.0-cuda11.3-cudnn8-devel
+
+RUN which pip && pip install --upgrade pip --no-cache-dir && \
+                 pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ pytorch-lightning torchmetrics --upgrade --no-cache-dir && \
+                 pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ opencv-python-headless matplotlib scipy pandas scikit-learn scikit-image imageio Pillow 'rich>=9.12.3' python-dotenv --no-cache-dir && \
+                 pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ hydra-core hydra_colorlog hydra-optuna-sweeper --upgrade --no-cache-dir && \
+                 pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ albumentations --upgrade --no-cache-dir && \
+                 pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu113/torch1.10.0/index.html && \
+                 conda clean --all -y

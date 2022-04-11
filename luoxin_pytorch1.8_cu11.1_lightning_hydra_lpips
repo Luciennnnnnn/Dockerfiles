@@ -1,0 +1,3 @@
+FROM bit:5000/luoxin_py3.8_pytorch1.8_cu11.1_lightning_hydra
+
+RUN which pip && pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ lpips torchmetrics --no-cache-dir

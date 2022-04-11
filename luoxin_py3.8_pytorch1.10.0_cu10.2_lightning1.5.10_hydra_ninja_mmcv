@@ -1,0 +1,5 @@
+FROM bit:5000/luoxin_py3.8_pytorch1.10.0_cu10.2_lightning1.5.5_hydra_ninja_mmcv_v3
+
+RUN which pip && pip install --upgrade pip --no-cache-dir && \
+                 pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ pytorch-lightning torchmetrics --upgrade --no-cache-dir && \
+                 conda clean --all -y

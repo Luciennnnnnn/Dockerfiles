@@ -1,0 +1,5 @@
+FROM bit:5000/luoxin_py3.8_pytorch1.8.1_cu10.2_lightning1.4.6_hydra_ninja
+
+RUN which pip && pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ torch==1.10.0 torchvision==0.11.1 torchaudio==0.10.0 --no-cache-dir && \
+                 pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ pytorch-lightning==1.5.5 torchmetrics==0.6.1 --no-cache-dir && \
+                 pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ albumentations==1.1.0

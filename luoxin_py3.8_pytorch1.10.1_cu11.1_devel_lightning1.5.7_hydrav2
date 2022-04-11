@@ -1,0 +1,8 @@
+FROM bit:5000/luoxin_py3.8_pytorch1.8.1_cu11.1_devel_lightning_hydra
+
+RUN which pip && pip install --upgrade pip --no-cache-dir && \
+                 conda install pytorch=1.10.1 torchvision=0.11.2 torchaudio=0.10.1 cudatoolkit=11.1 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/ && \
+                 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple/ pytorch-lightning==1.5.7 torchmetrics==0.6.2 --no-cache-dir && \
+                 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple/ albumentations==1.1.0 --no-cache-dir && \
+                 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple/ omegaconf hydra-core hydra_colorlog hydra-optuna-sweeper --upgrade --no-cache-dir && \
+                 conda clean --all -y

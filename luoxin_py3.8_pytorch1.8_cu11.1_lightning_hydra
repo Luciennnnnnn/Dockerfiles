@@ -1,0 +1,6 @@
+FROM pytorch/pytorch:1.8.0-cuda11.1-cudnn8-runtime
+
+RUN which pip && pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ opencv-python-headless matplotlib scipy pandas scikit-learn scikit-image imageio Pillow 'rich>=9.12.3' python-dotenv --no-cache-dir && \
+    pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ pytorch-lightning>=1.2.2 --no-cache-dir && \
+    pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ hydra-core==1.1.0.dev3 hydra_colorlog>=1.0.0 hydra-optuna-sweeper==0.9.0rc2 --no-cache-dir && \
+    pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ omegaconf==2.1.0.dev22 --no-cache-dir
