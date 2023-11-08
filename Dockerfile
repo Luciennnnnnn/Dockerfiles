@@ -1,5 +1,34 @@
-FROM bit:5000/luoxin_py3.8_pytorch1.10.1_cu11.3_devel_lightning_hydra_mmcv_wandb
+FROM docker.mirrors.sjtug.sjtu.edu.cn/pytorch:2.1.0-cuda11.8-cudnn8-devel
+ENV NV_CUDA_COMPAT_PACKAGE=
+ENV NVIDIA_REQUIRE_CUDA=
+ENV NV_CUDA_CUDART_VERSION=
+ENV CUDA_VERSION=
+RUN rm /usr/local/cuda-11.8/compat -rfv
+RUN apt update; DEBIAN_FRONTEND=noninteractive apt install -y tzdata openssh-server rsync vim git unrar && \
+apt autoclean && apt autoremove
 
-RUN which pip && pip install --upgrade pip --no-cache-dir && \
-                 pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ timm --no-cache-dir && \
-                 conda clean --all -y
+ENV TZ=Asia/Shanghai
+
+RUN which pip && pip config set global.trusted-host mirrors.aliyun.com && \
+    pip config set global.index-url http://mirrors.aliyun.com/pypi/simple/ && \
+    pip install --upgrade pip --no-cache-dir && \
+    pip install opencv-python-headless matplotlib scikit-learn --no-cache-dir && \
+    pip install xformers --index-url https://download.pytorch.org/whl/cu118 --no-cache-dir && \
+    pip install diffusers[torch] transformers accelerate datasets --no-cache-dir && \
+    pip install timm einops basicsr --no-cache-dir && \
+    pip install dists-pytorch lpips torchmetrics --no-cache-dir && \
+    pip install tensorboard wandb --no-cache-dir && \
+    pip install gdown lmdb --no-cache-dir && \
+    pip install pandas scikit-image imageio --no-cache-dir && \
+    pip install omegaconf --no-cache-dir && \
+    pip install python-dotenv icecream --no-cache-dir && \
+    # pip install pandas yapf scikit-image future addict tomli lazy_loader PyWavelets imageio --no-cache-dir && \
+    conda clean --all -y
+
+# Add a user
+# RUN useradd -m luoxin -u 1647 -s /bin/bash && \
+#     echo "luoxin:122408" | chpasswd && \
+#     echo "luoxin ALL=(ALL) ALL" >> /etc/sudoers
+
+# USER luoxin
+# WORKDIR /home/luoxin

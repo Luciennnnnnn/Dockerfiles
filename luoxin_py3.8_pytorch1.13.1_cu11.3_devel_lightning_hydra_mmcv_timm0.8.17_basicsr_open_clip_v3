@@ -1,0 +1,11 @@
+FROM bit:5000/luoxin_py3.8_pytorch1.13.1_cu11.3_devel_lightning_hydra_mmcv_timm0.8.17_basicsr_open_clip_v2
+
+USER root
+
+RUN which pip && pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn && \
+    pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+    pip install --upgrade pip --no-cache-dir && \
+    pip install torch==2.0.0 torchvision==0.15.1 torchaudio==2.0.1 torchmetrics==0.10.3 --no-cache-dir && \
+    pip install fvcore iopath submitit --no-cache-dir && \
+    pip install xformers==0.0.18 --no-cache-dir && \
+    conda clean --all -y

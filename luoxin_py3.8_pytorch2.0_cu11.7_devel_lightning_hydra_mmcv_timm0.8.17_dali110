@@ -1,0 +1,9 @@
+FROM bit:5000/luoxin_py3.8_pytorch2.0_cu11.7_devel_lightning_hydra_mmcv_timm0.8.17
+
+USER root
+
+RUN which pip && pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn && \
+    pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+    pip install --upgrade pip --no-cache-dir && \
+    pip install --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade nvidia-dali-cuda110 --no-cache-dir && \
+    conda clean --all -y

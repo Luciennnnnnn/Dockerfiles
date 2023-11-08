@@ -1,0 +1,9 @@
+FROM bit:5000/luoxin_py3.8_pytorch1.13.1_cu11.3_devel_lightning_hydra_mmcv_timm_basicsr_einops
+
+USER root
+
+RUN which pip && pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn && \
+    pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+    pip install --upgrade pip --no-cache-dir && \
+    pip install timm==0.8.15.dev0 --no-cache-dir && \
+    conda clean --all -y

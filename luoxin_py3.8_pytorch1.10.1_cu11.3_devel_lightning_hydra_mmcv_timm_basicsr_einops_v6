@@ -1,0 +1,11 @@
+FROM bit:5000/luoxin_py3.8_pytorch1.10.1_cu11.3_devel_lightning_hydra_mmcv_timm_basicsr_einops_v5
+
+USER root
+
+RUN which pip && pip config set global.trusted-host mirrors.aliyun.com && \
+    pip config set global.index-url http://mirrors.aliyun.com/pypi/simple/ && \
+    pip install --upgrade pip --no-cache-dir && \
+    pip install antialiased-cnns --no-cache-dir && \
+    conda clean --all -y
+
+USER luoxin

@@ -1,14 +1,13 @@
 FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-devel
-
-RUN apt update; DEBIAN_FRONTEND=noninteractive apt install -y tzdata openssh-server rsync vim git && \
+ENV NV_CUDA_COMPAT_PACKAGE=
+ENV NVIDIA_REQUIRE_CUDA=
+ENV NV_CUDA_CUDART_VERSION=
+ENV CUDA_VERSION=
+RUN rm /usr/local/cuda-11.8/compat -rfv
+RUN apt update; DEBIAN_FRONTEND=noninteractive apt install -y tzdata openssh-server rsync vim git unrar && \
 apt autoclean && apt autoremove
 
 ENV TZ=Asia/Shanghai
-
-# Add a user
-# RUN useradd -m luoxin -u 1647 -s /bin/bash && \
-#     echo "luoxin:122408" | chpasswd && \
-#     echo "luoxin ALL=(ALL) ALL" >> /etc/sudoers
 
 RUN which pip && pip config set global.trusted-host mirrors.aliyun.com && \
     pip config set global.index-url http://mirrors.aliyun.com/pypi/simple/ && \
@@ -25,3 +24,11 @@ RUN which pip && pip config set global.trusted-host mirrors.aliyun.com && \
     pip install python-dotenv icecream --no-cache-dir && \
     # pip install pandas yapf scikit-image future addict tomli lazy_loader PyWavelets imageio --no-cache-dir && \
     conda clean --all -y
+
+# Add a user
+# RUN useradd -m luoxin -u 1647 -s /bin/bash && \
+#     echo "luoxin:122408" | chpasswd && \
+#     echo "luoxin ALL=(ALL) ALL" >> /etc/sudoers
+
+# USER luoxin
+# WORKDIR /home/luoxin

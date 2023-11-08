@@ -1,0 +1,10 @@
+FROM bit:5000/luoxin_py3.8_pytorch1.10.1_cu11.3_devel_lightning_hydra_mmcv_timm_basicsr_einops_v4
+
+USER root
+
+RUN apt-get update ; \
+    echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections && \
+    apt-get -y install ttf-mscorefonts-installer && \
+    apt-get autoclean && apt-get autoremove
+
+USER luoxin

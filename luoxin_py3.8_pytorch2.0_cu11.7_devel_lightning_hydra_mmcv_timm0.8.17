@@ -1,0 +1,7 @@
+FROM bit:5000/luoxin_py3.8_pytorch1.13.1_cu11.3_devel_lightning_hydra_mmcv_timm0.8.17_basicsr_open_clip_v3
+
+USER root
+
+RUN apt update; DEBIAN_FRONTEND=noninteractive apt install tzdata
+
+ENV TZ=Asia/Shanghai
