@@ -1,0 +1,4 @@
+FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-devel
+
+RUN which pip && pip install --upgrade pip --no-cache-dir && \
+    pip install xformers --index-url https://download.pytorch.org/whl/cu118 --no-cache-dir
