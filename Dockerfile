@@ -1,4 +1,4 @@
-FROM docker.mirrors.sjtug.sjtu.edu.cn/pytorch:2.1.0-cuda11.8-cudnn8-devel
+FROM registry.cn-hangzhou.aliyuncs.com/luoxin01/pytorch-2.1.0-cuda11.8-cudnn8-devel:v1
 ENV NV_CUDA_COMPAT_PACKAGE=
 ENV NVIDIA_REQUIRE_CUDA=
 ENV NV_CUDA_CUDART_VERSION=
@@ -12,10 +12,11 @@ ENV TZ=Asia/Shanghai
 RUN which pip && pip config set global.trusted-host mirrors.aliyun.com && \
     pip config set global.index-url http://mirrors.aliyun.com/pypi/simple/ && \
     pip install --upgrade pip --no-cache-dir && \
+    pip install timm einops basicsr --no-cache-dir && \
     pip install opencv-python-headless matplotlib scikit-learn --no-cache-dir && \
     pip install xformers --index-url https://download.pytorch.org/whl/cu118 --no-cache-dir && \
-    pip install diffusers[torch] transformers accelerate datasets --no-cache-dir && \
-    pip install timm einops basicsr --no-cache-dir && \
+    pip install bitsandbytes --no-cache-dir && \
+    pip install diffusers[torch]==0.23.1 transformers accelerate datasets --no-cache-dir && \
     pip install dists-pytorch lpips torchmetrics --no-cache-dir && \
     pip install tensorboard wandb --no-cache-dir && \
     pip install gdown lmdb --no-cache-dir && \
