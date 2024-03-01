@@ -1,4 +1,4 @@
-FROM registry.cn-hangzhou.aliyuncs.com/luoxin01/pytorch-2.1.0-cuda11.8-cudnn8-devel:v1
+FROM registry.cn-hangzhou.aliyuncs.com/yry/pytorch-2.2.0-cuda12.1-cudnn8-devel-xformers:v1
 ENV NV_CUDA_COMPAT_PACKAGE=
 ENV NVIDIA_REQUIRE_CUDA=
 ENV NV_CUDA_CUDART_VERSION=
@@ -14,10 +14,9 @@ RUN which pip && pip config set global.trusted-host mirrors.aliyun.com && \
     pip install --upgrade pip --no-cache-dir && \
     pip install timm einops basicsr --no-cache-dir && \
     pip install opencv-python-headless matplotlib scikit-learn --no-cache-dir && \
-    pip install xformers --index-url https://download.pytorch.org/whl/cu118 --no-cache-dir && \
     pip install bitsandbytes --no-cache-dir && \
-    pip install diffusers[torch]==0.23.1 transformers accelerate datasets --no-cache-dir && \
-    pip install dists-pytorch lpips torchmetrics --no-cache-dir && \
+    pip install diffusers[torch]==0.23.3 transformers accelerate datasets --no-cache-dir && \
+    pip install dists-pytorch lpips torchmetrics piq pyiqa --no-cache-dir && \
     pip install tensorboard wandb --no-cache-dir && \
     pip install gdown lmdb --no-cache-dir && \
     pip install pandas scikit-image imageio --no-cache-dir && \
@@ -27,9 +26,9 @@ RUN which pip && pip config set global.trusted-host mirrors.aliyun.com && \
     conda clean --all -y
 
 # Add a user
-# RUN useradd -m luoxin -u 1647 -s /bin/bash && \
-#     echo "luoxin:122408" | chpasswd && \
-#     echo "luoxin ALL=(ALL) ALL" >> /etc/sudoers
+RUN useradd -m yry -u 1647 -s /bin/bash && \
+    echo "yry:122408" | chpasswd && \
+    echo "yry ALL=(ALL) ALL" >> /etc/sudoers
 
-# USER luoxin
-# WORKDIR /home/luoxin
+USER yry
+WORKDIR /home/yry
