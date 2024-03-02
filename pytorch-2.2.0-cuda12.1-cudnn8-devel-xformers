@@ -1,4 +1,4 @@
 FROM pytorch/pytorch:2.2.0-cuda12.1-cudnn8-devel
 
-RUN which pip && pip install --progress-bar --upgrade pip --no-cache-dir && \
-    pip install --progress-bar xformers --index-url https://download.pytorch.org/whl/cu121 --no-cache-dir
+RUN which pip && pip install --upgrade pip --progress-bar off --no-cache-dir && \
+    pip install xformers --index-url https://download.pytorch.org/whl/cu121 --progress-bar off --no-cache-dir
