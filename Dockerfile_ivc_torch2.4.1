@@ -1,10 +1,9 @@
-FROM pytorch/pytorch:2.3.0-cuda11.8-cudnn8-devel
+FROM pytorch/pytorch:2.4.1-cuda12.1-cudnn9-devel
+# FROM docker.1ms.run/pytorch/pytorch:2.4.1-cuda12.1-cudnn9-devel
 
-ENV NV_CUDA_COMPAT_PACKAGE=
-ENV NVIDIA_REQUIRE_CUDA=
-ENV NV_CUDA_CUDART_VERSION=
-ENV CUDA_VERSION=
-RUN rm /usr/local/cuda-11.8/compat -rfv
+# ARG http_proxy=http://202.38.69.70:3129
+# ARG https_proxy=http://202.38.69.70:3129
+
 RUN apt update; DEBIAN_FRONTEND=noninteractive apt install -y tzdata openssh-server rsync vim git unrar p7zip-full && \
 apt autoclean && apt autoremove
 
@@ -13,7 +12,7 @@ ENV TZ=Asia/Shanghai
 RUN which pip && pip config set global.trusted-host mirrors.aliyun.com && \
     pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
     pip install --upgrade pip --no-cache-dir && \
-    pip install xformers --index-url https://mirror.sjtu.edu.cn/pytorch-wheels/cu118 --no-cache-dir && \
+    pip install xformers==0.0.28 --index-url https://mirror.sjtu.edu.cn/pytorch-wheels/cu121 --no-cache-dir && \
     pip install timm einops kornia --no-cache-dir && \
     pip install matplotlib scikit-learn --no-cache-dir && \
     pip install bitsandbytes --no-cache-dir && \
@@ -22,20 +21,26 @@ RUN which pip && pip config set global.trusted-host mirrors.aliyun.com && \
     pip install pyiqa --no-cache-dir && \
     pip install tensorboard wandb --no-cache-dir && \
     pip install gdown lmdb --no-cache-dir && \
-    pip install pandas scikit-image imageio imagecodecs scipy==1.11.1 --no-cache-dir && \
+    pip install pandas scikit-image imageio imagecodecs scipy==1.14.1 --no-cache-dir && \
     pip install omegaconf --no-cache-dir && \
     pip install python-dotenv icecream --no-cache-dir && \
     pip install loralib peft --no-cache-dir && \
     pip install rawpy==0.21.0 fairscale --no-cache-dir && \
     pip uninstall -y opencv-python --no-cache-dir && \
+    pip uninstall -y opencv-python-headless --no-cache-dir && \
     pip install opencv-python-headless --no-cache-dir && \
+    pip install natten==0.17.3+torch240cu121 -f https://shi-labs.com/natten/wheels/ --no-cache-dir && \
     # pip install pandas yapf scikit-image future addict tomli lazy_loader PyWavelets imageio --no-cache-dir && \
     conda clean --all -y
 
-# Add a user
-RUN useradd -m luoxin -u 1647 -s /bin/bash && \
-    echo "luoxin:122408" | chpasswd && \
-    echo "luoxin ALL=(ALL) ALL" >> /etc/sudoers
+# COPY natten-0.17.3%2Btorch240cu121-cp311-cp311-linux_x86_64.whl /tmp/
+# RUN pip install /tmp/natten-0.17.3%2Btorch240cu121-cp311-cp311-linux_x86_64.whl --no-cache-dir && \
+#     rm -rf /tmp/natten-0.17.3%2Btorch240cu121-cp311-cp311-linux_x86_64.whl
 
-USER luoxin
-WORKDIR /home/luoxin
+# Add a user
+RUN useradd -m lx -u 1021 -s /bin/bash && \
+    echo "lx:122408" | chpasswd && \
+    echo "lx ALL=(ALL) ALL" >> /etc/sudoers
+
+USER lx
+WORKDIR /home/lx
