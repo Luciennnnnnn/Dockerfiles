@@ -1,8 +1,8 @@
-FROM pytorch/pytorch:2.4.1-cuda12.1-cudnn9-devel
-# FROM docker.1ms.run/pytorch/pytorch:2.4.1-cuda12.1-cudnn9-devel
+# FROM pytorch/pytorch:2.4.1-cuda12.1-cudnn9-devel
+FROM docker.1ms.run/pytorch/pytorch:2.4.1-cuda12.1-cudnn9-devel
 
-# ARG http_proxy=http://202.38.69.70:3129
-# ARG https_proxy=http://202.38.69.70:3129
+ARG http_proxy=http://202.38.69.70:3129
+ARG https_proxy=http://202.38.69.70:3129
 
 RUN apt update; DEBIAN_FRONTEND=noninteractive apt install -y tzdata openssh-server rsync vim git unrar p7zip-full && \
 apt autoclean && apt autoremove
@@ -19,6 +19,7 @@ RUN which pip && pip config set global.trusted-host mirrors.aliyun.com && \
     pip install diffusers[torch] transformers accelerate datasets --no-cache-dir && \
     pip install deepspeed --no-cache-dir && \
     pip install pyiqa --no-cache-dir && \
+    pip install transformers -U --no-cache-dir && \
     pip install tensorboard wandb --no-cache-dir && \
     pip install gdown lmdb --no-cache-dir && \
     pip install pandas scikit-image imageio imagecodecs scipy==1.14.1 --no-cache-dir && \
@@ -29,13 +30,13 @@ RUN which pip && pip config set global.trusted-host mirrors.aliyun.com && \
     pip uninstall -y opencv-python --no-cache-dir && \
     pip uninstall -y opencv-python-headless --no-cache-dir && \
     pip install opencv-python-headless --no-cache-dir && \
-    pip install natten==0.17.3+torch240cu121 -f https://shi-labs.com/natten/wheels/ --no-cache-dir && \
+    # pip install natten==0.17.3+torch240cu121 -f https://shi-labs.com/natten/wheels/ --no-cache-dir && \
     # pip install pandas yapf scikit-image future addict tomli lazy_loader PyWavelets imageio --no-cache-dir && \
     conda clean --all -y
 
-# COPY natten-0.17.3%2Btorch240cu121-cp311-cp311-linux_x86_64.whl /tmp/
-# RUN pip install /tmp/natten-0.17.3%2Btorch240cu121-cp311-cp311-linux_x86_64.whl --no-cache-dir && \
-#     rm -rf /tmp/natten-0.17.3%2Btorch240cu121-cp311-cp311-linux_x86_64.whl
+COPY "natten-0.17.3+torch240cu121-cp311-cp311-linux_x86_64.whl" /tmp/
+RUN pip install /tmp/natten-0.17.3+torch240cu121-cp311-cp311-linux_x86_64.whl --no-cache-dir && \
+    rm -rf /tmp/natten-0.17.3+torch240cu121-cp311-cp311-linux_x86_64.whl
 
 # Add a user
 RUN useradd -m lx -u 1021 -s /bin/bash && \
