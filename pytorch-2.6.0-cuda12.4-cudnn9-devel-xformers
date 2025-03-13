@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:2.6.0-cuda12.4-cudnn9-devel
+FROM docker.1ms.run/pytorch/pytorch:2.6.0-cuda12.4-cudnn9-devel
 
 RUN which pip && pip install --upgrade pip --no-cache-dir && \
     pip install xformers --index-url https://download.pytorch.org/whl/cu124 --no-cache-dir
