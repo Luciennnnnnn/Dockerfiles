@@ -1,4 +1,7 @@
 FROM docker.1ms.run/pytorch/pytorch:2.6.0-cuda12.4-cudnn9-devel
 
+RUN apt update; DEBIAN_FRONTEND=noninteractive apt install -y tzdata openssh-server rsync vim git unrar p7zip-full && \
+apt autoclean && apt autoremove
+
 RUN which pip && pip install --upgrade pip --no-cache-dir && \
     pip install xformers --index-url https://download.pytorch.org/whl/cu124 --no-cache-dir
