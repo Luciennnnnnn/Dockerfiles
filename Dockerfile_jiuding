@@ -1,0 +1,30 @@
+ENV https_proxy=http://10.8.36.1:2080 && \
+    http_proxy=http://10.8.36.1:2080
+
+RUN sed -i "s#\S\+#http://mirrors.aliyun.com/ubuntu/#2" /etc/apt/sources.list
+RUN apt update; DEBIAN_FRONTEND=noninteractive apt install -y tzdata openssh-server rsync vim git unrar p7zip-full && \
+mkdir -p /run/sshd && \
+apt autoclean && apt autoremove
+
+ENV TZ=Asia/Shanghai
+
+RUN which pip && pip config set global.trusted-host mirrors.aliyun.com && \
+    pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+    pip install --upgrade pip wheel setuptools --no-cache-dir && \
+
+
+    pip install flash-attn --no-build-isolation --no-cache-dir && \
+    pip install timm einops kornia --no-cache-dir && \
+    pip install matplotlib scikit-learn --no-cache-dir && \
+    pip install diffusers[torch] transformers==4.51.3 accelerate datasets --no-cache-dir && \
+    pip install tensorboard wandb --no-cache-dir && \
+    pip install pandas scikit-image imageio imagecodecs scipy==1.14.1 --no-cache-dir && \
+    pip install omegaconf --no-cache-dir && \
+    pip install python-dotenv --no-cache-dir && \
+    pip install peft --no-cache-dir && \
+    pip uninstall -y opencv-python --no-cache-dir && \
+    pip uninstall -y opencv-python-headless --no-cache-dir && \
+    pip install opencv-python-headless --no-cache-dir && \
+    conda clean --all -y
+
+RUN ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa_jiuding -y  && cat ~/.ssh/id_rsa_jiuding.pub >>~/.ssh/authorizedKeys

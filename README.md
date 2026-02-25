@@ -1,0 +1,1 @@
+sudo docker build -t luoxin_py3.11_pytorch2.6.0_cu12.4_devel -f /ghome/luoxin/dockertemp/Dockerfile_yuan_torch2.6 . 2>&1 | tee build.log
